@@ -1,0 +1,470 @@
+{
+  "info": {
+    "_postman_id": "921c1d4a-d611-46ec-abb5-fd77589aeb00",
+    "name": "Distribuidas-Parking",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "49583446",
+    "_collection_link": "https://go.postman.co/collection/49583446-921c1d4a-d611-46ec-abb5-fd77589aeb00?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Post - Zone",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Zona A\",\r\n  \"description\": \"Zona de pruebas\",\r\n  \"capacity\": 10,\r\n  \"type\": \"EXTERNAL\", \r\n  \"isActive\": true\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/zones/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "zones",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get - Zone",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/zones",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "zones"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get - Space",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/spaces/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "spaces",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Post - Space",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"code\": \"G304\",\r\n  \"priority\": 2,\r\n  \"idZone\": \"e695d25d-34d5-401c-865f-9017f4cbec34\",\r\n  \"status\": \"AVAILABLE\",\r\n  \"isReserved\": false\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/spaces/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "spaces",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get - Available Spaces by Zone",
+      "request": {
+        "auth": { "type": "noauth" },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/spaces/availablesbyzone/e695d25d-34d5-401c-865f-9017f4cbec34",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "spaces", "availablesbyzone", "e695d25d-34d5-401c-865f-9017f4cbec34"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GraphQL - Tickets Query",
+      "request": {
+        "auth": { "type": "noauth" },
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "x-apollo-operation-name", "value": "TicketsQuery" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"query\": \"query { tickets { codigoTicket personaNombre vehiculoPlaca estado } }\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:4000/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": [""]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GraphQL - Emitir Ticket Mutation",
+      "request": {
+        "auth": { "type": "noauth" },
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "x-apollo-operation-name", "value": "EmitirTicketMutation" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"query\": \"mutation { emitirTicket(personaIdentificacion: \\\"1712345678\\\", vehiculoPlaca: \\\"ABC-123\\\") { codigoTicket espacioCodigo } }\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:4000/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": [""]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "ms-clientes - Persona por Identificación",
+      "request": {
+        "auth": { "type": "noauth" },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8081/api/personas/identificacion/1712345678",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["api", "personas", "identificacion", "1712345678"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "ms-clientes - Vehículo por Placa",
+      "request": {
+        "auth": { "type": "noauth" },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8081/api/vehiculos/placa/ABC-1234",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["api", "vehiculos", "placa", "ABC-1234"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "notificacion-service - Listar Notificaciones",
+      "request": {
+        "auth": { "type": "noauth" },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3001/notifications",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["notifications"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GraphQL - Tickets (variables ejemplo)",
+      "request": {
+        "auth": { "type": "noauth" },
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "x-apollo-operation-name", "value": "TicketsQuery" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"query\": \"query Tickets { tickets { codigoTicket personaNombre vehiculoPlaca estado fechaIngreso zonaNombre espacioCodigo } }\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:4000/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": [""]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GraphQL - Tickets por Persona (variables)",
+      "request": {
+        "auth": { "type": "noauth" },
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "x-apollo-operation-name", "value": "TicketsByPersona" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"query\": \"query TicketsByPersona($id: String!) { ticketsByPersona(identificacion: $id) { codigoTicket personaIdentificacion personaNombre vehiculoPlaca estado fechaIngreso zonaNombre espacioCodigo } }\",\n  \"variables\": { \"id\": \"1712345678\" }\n}"
+        },
+        "url": {
+          "raw": "http://localhost:4000/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": [""]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GraphQL - Tickets por Vehículo (variables)",
+      "request": {
+        "auth": { "type": "noauth" },
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "x-apollo-operation-name", "value": "TicketsByVehiculo" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"query\": \"query TicketsByVehiculo($placa: String!) { ticketsByVehiculo(placa: $placa) { codigoTicket personaNombre vehiculoPlaca estado fechaIngreso zonaNombre espacioCodigo } }\",\n  \"variables\": { \"placa\": \"ABC-1234\" }\n}"
+        },
+        "url": {
+          "raw": "http://localhost:4000/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": [""]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GraphQL - Ticket por Código (variables)",
+      "request": {
+        "auth": { "type": "noauth" },
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "x-apollo-operation-name", "value": "TicketByCodigo" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"query\": \"query TicketByCodigo($codigo: String!) { ticket(codigoTicket: $codigo) { codigoTicket personaNombre vehiculoPlaca estado fechaIngreso zonaNombre espacioCodigo } }\",\n  \"variables\": { \"codigo\": \"TICK-001\" }\n}"
+        },
+        "url": {
+          "raw": "http://localhost:4000/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": [""]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GraphQL - Cerrar Ticket (variables)",
+      "request": {
+        "auth": { "type": "noauth" },
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "x-apollo-operation-name", "value": "CerrarTicket" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"query\": \"mutation CerrarTicket($id: String!) { cerrarTicket(ticketId: $id) { codigoTicket estado fechaSalida tiempoEstacionadoMinutos } }\",\n  \"variables\": { \"id\": \"TID-UUID-001\" }\n}"
+        },
+        "url": {
+          "raw": "http://localhost:4000/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": [""]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GraphQL - Anular Ticket (variables)",
+      "request": {
+        "auth": { "type": "noauth" },
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "x-apollo-operation-name", "value": "AnularTicket" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"query\": \"mutation AnularTicket($id: String!) { anularTicket(ticketId: $id) { codigoTicket estado } }\",\n  \"variables\": { \"id\": \"TID-UUID-001\" }\n}"
+        },
+        "url": {
+          "raw": "http://localhost:4000/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": [""]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "ms-clientes - Crear Persona Natural",
+      "request": {
+        "auth": { "type": "noauth" },
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"identificacion\": \"1712345678\",\r\n  \"nombre\": \"Juan\",\r\n  \"email\": \"juan@example.com\",\r\n  \"telefono\": \"0999999999\",\r\n  \"direccion\": \"Av. Siempre Viva\",\r\n  \"apellido\": \"Perez\",\r\n  \"fechaNacimiento\": \"1995-05-10T00:00:00Z\",\r\n  \"genero\": \"MASCULINO\"\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8081/api/personas/natural",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["api", "personas", "natural"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "ms-clientes - Crear Persona Jurídica",
+      "request": {
+        "auth": { "type": "noauth" },
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"identificacion\": \"1790012345001\",\r\n  \"nombre\": \"Empresa XYZ\",\r\n  \"email\": \"contacto@xyz.com\",\r\n  \"telefono\": \"022345678\",\r\n  \"direccion\": \"Av. Principal 123\",\r\n  \"razonSocial\": \"XYZ S.A.\",\r\n  \"representanteLegal\": \"Carlos Gomez\",\r\n  \"actividadEconomica\": \"Servicios\"\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8081/api/personas/juridica",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["api", "personas", "juridica"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "ms-clientes - Crear Automóvil",
+      "request": {
+        "auth": { "type": "noauth" },
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"placa\": \"ABC-1234\",\r\n  \"marca\": \"Toyota\",\r\n  \"modelo\": \"Corolla\",\r\n  \"color\": \"Rojo\",\r\n  \"anioFabricacion\": 2018,\r\n  \"idPropietario\": \"e695d25d-34d5-401c-865f-9017f4cbec34\",\r\n  \"tipoAutomovil\": \"SEDAN\",\r\n  \"tipoCombustible\": \"GASOLINA\",\r\n  \"cilindraje\": 1.8,\r\n  \"suspensionDeportiva\": false,\r\n  \"traccion\": \"DELANTERA\",\r\n  \"tieneBalde\": false,\r\n  \"numeroPuertas\": 4,\r\n  \"numeroAsientos\": 5,\r\n  \"capacidadTanque\": 50.0\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8081/api/vehiculos/automovil",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["api", "vehiculos", "automovil"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "ms-clientes - Crear Moto",
+      "request": {
+        "auth": { "type": "noauth" },
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"placa\": \"ABD-123\",\r\n  \"marca\": \"Yamaha\",\r\n  \"modelo\": \"MT-07\",\r\n  \"color\": \"Azul\",\r\n  \"anioFabricacion\": 2020,\r\n  \"idPropietario\": \"e695d25d-34d5-401c-865f-9017f4cbec34\",\r\n  \"tieneCasco\": true,\r\n  \"cilindraje\": 689,\r\n  \"tipo\": \"DEPORTIVA\",\r\n  \"tipoCombustible\": \"GASOLINA\",\r\n  \"tieneABS\": true,\r\n  \"numeroRuedas\": 2,\r\n  \"capacidadTanque\": 14.0,\r\n  \"tipoFrenos\": \"Disco\"\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8081/api/vehiculos/moto",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["api", "vehiculos", "moto"]
+        }
+      },
+      "response": []
+    }
+  ]
+}

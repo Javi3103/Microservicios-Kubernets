@@ -1,0 +1,189 @@
+# Configuración de Ejemplo de Requests HTTP para probar la API
+
+### Variables
+@baseUrl = http://localhost:8000
+@directUrl = http://localhost:8081
+@kongAdmin = http://localhost:8001
+
+### ===== KONG ADMIN API =====
+
+### 1. Verificar estado de Kong
+GET {{kongAdmin}}/status
+
+### 2. Listar servicios configurados
+GET {{kongAdmin}}/services
+
+### 3. Listar rutas configuradas
+GET {{kongAdmin}}/routes
+
+### 4. Listar plugins activos
+GET {{kongAdmin}}/plugins
+
+
+### ===== PERSONAS API (a través de Kong) =====
+
+### 1. Listar todas las personas
+GET {{baseUrl}}/api/v1/personas
+
+### 2. Crear Persona Natural
+POST {{baseUrl}}/api/v1/personas/natural
+Content-Type: application/json
+
+{
+  "identificacion": "1234567890",
+  "nombre": "Juan",
+  "apellido": "Pérez",
+  "email": "juan.perez@example.com",
+  "telefono": "0987654321",
+  "direccion": "Av. Amazonas y Naciones Unidas, Quito",
+  "fechaNacimiento": "1990-05-15T00:00:00",
+  "genero": "MASCULINO"
+}
+
+### 3. Crear Persona Jurídica
+POST {{baseUrl}}/api/v1/personas/juridica
+Content-Type: application/json
+
+{
+  "identificacion": "1234567890001",
+  "nombre": "TechCorp S.A.",
+  "email": "contacto@techcorp.com",
+  "telefono": "0987654322",
+  "direccion": "Av. República y Amazonas, Quito",
+  "razonSocial": "TechCorp S.A.",
+  "representanteLegal": "María González",
+  "actividadEconomica": "Desarrollo de software"
+}
+
+### 4. Buscar persona por ID (reemplazar {id} con un UUID real)
+GET {{baseUrl}}/api/v1/personas/{id}
+
+### 5. Actualizar Persona Natural
+PUT {{baseUrl}}/api/v1/personas/natural/{id}
+Content-Type: application/json
+
+{
+  "identificacion": "1234567890",
+  "nombre": "Juan Carlos",
+  "apellido": "Pérez López",
+  "email": "juan.perez@example.com",
+  "telefono": "0987654321",
+  "direccion": "Av. Amazonas 123, Quito",
+  "fechaNacimiento": "1990-05-15T00:00:00",
+  "genero": "MASCULINO"
+}
+
+### 6. Eliminar persona (borrado lógico)
+DELETE {{baseUrl}}/api/v1/personas/{id}
+
+### 7. Listar solo personas naturales
+GET {{baseUrl}}/api/v1/personas/naturales
+
+
+### ===== VEHÍCULOS API (a través de Kong) =====
+
+### 1. Listar todos los vehículos
+GET {{baseUrl}}/api/v1/vehiculos
+
+### 2. Crear Moto
+POST {{baseUrl}}/api/v1/vehiculos/moto
+Content-Type: application/json
+
+{
+  "placa": "ABC123",
+  "marca": "Yamaha",
+  "modelo": "YZF-R3",
+  "color": "Azul",
+  "anioFabricacion": 2023,
+  "idPropietario": "REEMPLAZAR-CON-UUID-PERSONA",
+  "tieneCasco": true,
+  "cilindraje": 321,
+  "tipo": "DEPORTIVA",
+  "tipoCombustible": "GASOLINA",
+  "tieneABS": true,
+  "numeroRuedas": 2,
+  "capacidadTanque": 14.0,
+  "tipoFrenos": "Disco"
+}
+
+### 3. Crear Automóvil
+POST {{baseUrl}}/api/v1/vehiculos/automovil
+Content-Type: application/json
+
+{
+  "placa": "XYZ789",
+  "marca": "Toyota",
+  "modelo": "Corolla",
+  "color": "Gris",
+  "anioFabricacion": 2024,
+  "idPropietario": "REEMPLAZAR-CON-UUID-PERSONA",
+  "tipoAutomovil": "SEDAN",
+  "tipoCombustible": "HIBRIDO",
+  "cilindraje": 1.8,
+  "suspensionDeportiva": false,
+  "traccion": "DELANTERA",
+  "tieneBalde": false,
+  "numeroPuertas": 4,
+  "numeroAsientos": 5,
+  "capacidadTanque": 50.0
+}
+
+### 4. Buscar vehículo por ID
+GET {{baseUrl}}/api/v1/vehiculos/{id}
+
+### 5. Buscar vehículo por placa
+GET {{baseUrl}}/api/v1/vehiculos/placa/ABC123
+
+### 6. Buscar vehículos por propietario
+GET {{baseUrl}}/api/v1/vehiculos/propietario/{idPropietario}
+
+### 7. Buscar vehículos por marca
+GET {{baseUrl}}/api/v1/vehiculos/marca/Toyota
+
+### 8. Listar vehículos activos
+GET {{baseUrl}}/api/v1/vehiculos/activos
+
+### 9. Actualizar Moto
+PUT {{baseUrl}}/api/v1/vehiculos/moto/{id}
+Content-Type: application/json
+
+{
+  "placa": "ABC123",
+  "marca": "Yamaha",
+  "modelo": "YZF-R3",
+  "color": "Rojo",
+  "anioFabricacion": 2023,
+  "idPropietario": "REEMPLAZAR-CON-UUID-PERSONA",
+  "tieneCasco": true,
+  "cilindraje": 321,
+  "tipo": "DEPORTIVA",
+  "tipoCombustible": "GASOLINA",
+  "tieneABS": true,
+  "numeroRuedas": 2,
+  "capacidadTanque": 14.0,
+  "tipoFrenos": "Disco"
+}
+
+### 10. Eliminar vehículo
+DELETE {{baseUrl}}/api/v1/vehiculos/{id}
+
+
+### ===== ACCESO DIRECTO (sin Kong) =====
+
+### Listar personas (directo)
+GET {{directUrl}}/api/v1/personas
+
+### Crear persona (directo)
+POST {{directUrl}}/api/v1/personas/natural
+Content-Type: application/json
+
+{
+  "identificacion": "0987654321",
+  "nombre": "Ana",
+  "apellido": "Martínez",
+  "email": "ana.martinez@example.com",
+  "telefono": "0912345678",
+  "direccion": "Av. 6 de Diciembre, Quito",
+  "fechaNacimiento": "1995-03-20T00:00:00",
+  "genero": "FEMENINO"
+}

@@ -1,0 +1,269 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                                                                            ║
+║           ✅ CONFIGURACIÓN COMPLETADA - DOCKER HUB + KUBERNETES             ║
+║                                                                            ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+📦 USUARIO DOCKER HUB: javi3103
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📋 ARCHIVOS CREADOS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+En la RAÍZ del proyecto:
+  📄 docker-build-push.ps1
+     └─ Script para hacer build y push de todas las imágenes a Docker Hub
+
+En Kubernetes/microservicios/:
+  📄 00-namespace.yml
+     └─ Namespace compartido para todos los microservicios
+  
+  📄 01-ms-clientes-deployment.yml
+  📄 02-ms-clientes-service.yml
+     └─ Deployment y Service para ms-clientes (Puerto 8081)
+  
+  📄 03-ms-tickets-deployment.yml
+  📄 04-ms-tickets-service.yml
+     └─ Deployment y Service para ms-tickets (Puerto 4000)
+  
+  📄 05-notificacion-deployment.yml
+  📄 06-notificacion-service.yml
+     └─ Deployment y Service para notificacion-service (Puerto 3000)
+  
+  📄 07-zone-core-deployment.yml
+  📄 08-zone-core-service.yml
+     └─ Deployment y Service para zone-core (Puerto 8080)
+  
+  📄 09-ingress.yml
+     └─ Ingress para exponer todos los servicios (rutas: /clientes, /tickets, etc)
+  
+  📄 deploy-all.ps1
+  📄 deploy-all.sh
+     └─ Scripts para desplegar en Kubernetes (PowerShell y Bash)
+  
+  📄 README-DEPLOYMENT.md
+     └─ Guía completa y detallada
+  
+  📄 PASOS-RAPIDOS.md
+     └─ Guía resumida (⭐ EMPEZAR POR AQUÍ)
+  
+  📄 EJEMPLOS-APIS.md
+     └─ Ejemplos de cómo probar las APIs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🚀 PRÓXIMOS 3 PASOS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PASO 1️⃣  - HACER LOGIN EN DOCKER HUB
+──────────────────────────────────────
+Ejecuta en PowerShell:
+  docker login
+  
+Usa:
+  Usuario: javi3103
+  Password: [tu contraseña de Docker Hub]
+
+Verifica:
+  docker info
+
+
+PASO 2️⃣  - BUILD Y PUSH A DOCKER HUB (15-20 minutos)
+──────────────────────────────────────
+Ejecuta en PowerShell:
+  cd "d:\Septimo Semestre\Aplicaciones Distribuidas\P3\Microservicios_2.0"
+  
+  .\docker-build-push.ps1
+
+Esto hará:
+  ✓ Build de ms-clientes        → javi3103/ms-clientes:latest
+  ✓ Build de ms-tickets         → javi3103/ms-tickets:latest
+  ✓ Build de notificacion-service → javi3103/notificacion-service:latest
+  ✓ Build de zone-core          → javi3103/zone-core:latest
+  
+  ✓ Push todas a Docker Hub
+  ✓ Crear tags: latest y v1.0.0
+
+Verifica en:
+  https://hub.docker.com/r/javi3103/ms-clientes
+  https://hub.docker.com/r/javi3103/ms-tickets
+  https://hub.docker.com/r/javi3103/notificacion-service
+  https://hub.docker.com/r/javi3103/zone-core
+
+
+PASO 3️⃣  - DESPLEGAR EN KUBERNETES (2-3 minutos)
+──────────────────────────────────────
+Ejecuta en PowerShell:
+  cd "d:\Septimo Semestre\Aplicaciones Distribuidas\P3\Microservicios_2.0\Kubernetes\microservicios"
+  
+  .\deploy-all.ps1
+
+Esto hará:
+  ✓ Crear namespace: microservicios
+  ✓ Desplegar 4 microservicios con 2 replicas cada uno
+  ✓ Crear Services (ClusterIP)
+  ✓ Configurar Ingress
+  
+Verifica:
+  kubectl get pods -n microservicios
+  kubectl get svc -n microservicios
+  kubectl get all -n microservicios
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎯 DESPUÉS DEL DESPLIEGUE - ACCEDER A LOS SERVICIOS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Abre 4 terminales PowerShell y ejecuta cada uno:
+
+Terminal 1 - MS-CLIENTES (8081):
+  kubectl port-forward svc/ms-clientes-service 8081:8081 -n microservicios
+  Accede: http://localhost:8081
+
+Terminal 2 - MS-TICKETS (4000):
+  kubectl port-forward svc/ms-tickets-service 4000:4000 -n microservicios
+  Accede: http://localhost:4000
+
+Terminal 3 - NOTIFICACION-SERVICE (3000):
+  kubectl port-forward svc/notificacion-service 3000:3000 -n microservicios
+  Accede: http://localhost:3000
+
+Terminal 4 - ZONE-CORE (8080):
+  kubectl port-forward svc/zone-core-service 8080:8080 -n microservicios
+  Accede: http://localhost:8080
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📊 ARQUITECTURA DESPLEGADA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+┌─────────────────────────────────────────────────────────┐
+│         DOCKER HUB (javi3103)                           │
+├─────────────────────────────────────────────────────────┤
+│ • javi3103/ms-clientes:latest                           │
+│ • javi3103/ms-tickets:latest                            │
+│ • javi3103/notificacion-service:latest                  │
+│ • javi3103/zone-core:latest                             │
+└─────────────────────────────────────────────────────────┘
+                        ↓ PULL
+┌─────────────────────────────────────────────────────────┐
+│      KUBERNETES (namespace: microservicios)             │
+├─────────────────────────────────────────────────────────┤
+│ Deployments:                                            │
+│  • ms-clientes (2 replicas)                             │
+│  • ms-tickets (2 replicas)                              │
+│  • notificacion-service (2 replicas)                    │
+│  • zone-core (2 replicas)                               │
+│                                                         │
+│ Services (ClusterIP):                                   │
+│  • ms-clientes-service:8081                             │
+│  • ms-tickets-service:4000                              │
+│  • notificacion-service:3000                            │
+│  • zone-core-service:8080                               │
+│                                                         │
+│ Ingress:                                                │
+│  /clientes → ms-clientes-service:8081                   │
+│  /tickets → ms-tickets-service:4000                     │
+│  /notificaciones → notificacion-service:3000            │
+│  /zones → zone-core-service:8080                        │
+└─────────────────────────────────────────────────────────┘
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📚 DOCUMENTACIÓN DISPONIBLE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⭐ COMIENZA AQUÍ:
+  Kubernetes/microservicios/PASOS-RAPIDOS.md
+  
+📖 GUÍA COMPLETA:
+  Kubernetes/microservicios/README-DEPLOYMENT.md
+  
+🧪 EJEMPLOS DE APIS:
+  Kubernetes/microservicios/EJEMPLOS-APIS.md
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✨ CARACTERÍSTICAS CONFIGURADAS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ 2 replicas por microservicio (Alta disponibilidad)
+✅ RollingUpdate strategy (Actualizaciones sin downtime)
+✅ Resource limits and requests (Gestión eficiente de recursos)
+✅ Liveness probes (Reinicio automático si se cae)
+✅ Readiness probes (Detecta servicios listos)
+✅ Health checks configurados
+✅ ClusterIP services para comunicación interna
+✅ Ingress para exponer servicios
+✅ Namespace aislado para los microservicios
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔧 COMANDOS ÚTILES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Ver estado general:
+  kubectl get all -n microservicios
+
+Ver logs:
+  kubectl logs -f deployment/ms-clientes -n microservicios
+
+Describir recursos:
+  kubectl describe deployment ms-clientes -n microservicios
+
+Reiniciar deployment:
+  kubectl rollout restart deployment/ms-clientes -n microservicios
+
+Ver metricas:
+  kubectl top pods -n microservicios
+
+Ejecutar comando en pod:
+  kubectl exec <pod-name> -n microservicios -- <comando>
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚠️  REQUISITOS PREVIOS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✓ Docker instalado: docker version
+✓ kubectl instalado: kubectl version --client
+✓ Cluster Kubernetes corriendo: kubectl get nodes
+✓ Cuenta en Docker Hub con usuario: javi3103
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📞 SOPORTE RÁPIDO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❌ Error: "ImagePullBackOff"
+  → docker login
+  → Verificar imagen en Docker Hub
+
+❌ Error: "CrashLoopBackOff"
+  → kubectl logs -f deployment/ms-clientes -n microservicios
+  → Revisar errores de la aplicación
+
+❌ Error: "No se puede conectar a Kubernetes"
+  → kubectl config get-contexts
+  → kubectl config use-context <nombre>
+
+❌ Error: "Pod no inicia"
+  → kubectl describe pod <pod-name> -n microservicios
+  → Revisar eventos y logs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+¡TODO ESTÁ LISTO! 🚀
+
+Sigue los "Próximos 3 Pasos" arriba para completar el despliegue.
+
+Fecha: 2026-02-04
+Usuario: javi3103
+Estado: ✅ CONFIGURACIÓN COMPLETADA
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║                                                                            ║
+║            Para dudas, revisa PASOS-RAPIDOS.md o README-DEPLOYMENT.md      ║
+║                                                                            ║
+╚════════════════════════════════════════════════════════════════════════════╝

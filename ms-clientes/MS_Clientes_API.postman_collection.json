@@ -1,0 +1,355 @@
+{
+	"info": {
+		"name": "MS Clientes API",
+		"description": "Colección completa de endpoints para el microservicio de clientes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "PERSONAS",
+			"item": [
+				{
+					"name": "Listar todas las personas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/personas",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8081",
+							"path": ["api", "personas"]
+						}
+					}
+				},
+				{
+					"name": "Buscar por identificación",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/personas/identificacion/1234567890",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8081",
+							"path": ["api", "personas", "identificacion", "1234567890"]
+						}
+					}
+				},
+				{
+					"name": "Crear Persona Natural",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"identificacion\": \"1234567890\",\n  \"nombre\": \"Juan\",\n  \"apellido\": \"Pérez\",\n  \"email\": \"juan.perez@example.com\",\n  \"telefono\": \"0987654321\",\n  \"direccion\": \"Av. Amazonas y Naciones Unidas, Quito\",\n  \"fechaNacimiento\": \"1990-05-15T00:00:00\",\n  \"genero\": \"MASCULINO\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/personas/natural",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8081",
+							"path": ["api", "personas", "natural"]
+						}
+					}
+				},
+				{
+					"name": "Crear Persona Jurídica",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"identificacion\": \"1234567890001\",\n  \"nombre\": \"TechCorp S.A.\",\n  \"email\": \"contacto@techcorp.com\",\n  \"telefono\": \"0987654322\",\n  \"direccion\": \"Av. República y Amazonas, Quito\",\n  \"razonSocial\": \"TechCorp S.A.\",\n  \"representanteLegal\": \"María González\",\n  \"actividadEconomica\": \"Desarrollo de software\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/personas/juridica",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8081",
+							"path": ["api", "personas", "juridica"]
+						}
+					}
+				},
+				{
+					"name": "Actualizar Persona Natural",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"identificacion\": \"1234567890\",\n  \"nombre\": \"Juan Carlos\",\n  \"apellido\": \"Pérez López\",\n  \"email\": \"juan.perez@example.com\",\n  \"telefono\": \"0987654321\",\n  \"direccion\": \"Av. Amazonas 123, Quito\",\n  \"fechaNacimiento\": \"1990-05-15T00:00:00\",\n  \"genero\": \"MASCULINO\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/personas/natural/{{personaId}}",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8081",
+							"path": ["api", "personas", "natural", "{{personaId}}"]
+						}
+					}
+				},
+				{
+					"name": "Actualizar Persona Jurídica",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"identificacion\": \"1234567890001\",\n  \"nombre\": \"TechCorp S.A. Actualizado\",\n  \"email\": \"contacto@techcorp.com\",\n  \"telefono\": \"0987654322\",\n  \"direccion\": \"Av. República y Amazonas, Quito\",\n  \"razonSocial\": \"TechCorp S.A.\",\n  \"representanteLegal\": \"María González\",\n  \"actividadEconomica\": \"Desarrollo de software\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/personas/juridica/{{personaId}}",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8081",
+							"path": ["api", "personas", "juridica", "{{personaId}}"]
+						}
+					}
+				},
+				{
+					"name": "Eliminar Persona",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/personas/{{personaId}}",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8081",
+							"path": ["api", "personas", "{{personaId}}"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "VEHICULOS",
+			"item": [
+				{
+					"name": "Listar todos los vehículos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/vehiculos",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8081",
+							"path": ["api", "vehiculos"]
+						}
+					}
+				},
+				{
+					"name": "Obtener vehículo por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/vehiculos/{{vehiculoId}}",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8081",
+							"path": ["api", "vehiculos", "{{vehiculoId}}"]
+						}
+					}
+				},
+				{
+					"name": "Buscar por placa",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/vehiculos/placa/ABC123",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8081",
+							"path": ["api", "vehiculos", "placa", "ABC123"]
+						}
+					}
+				},
+				{
+					"name": "Buscar por propietario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/vehiculos/propietario/{{personaId}}",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8081",
+							"path": ["api", "vehiculos", "propietario", "{{personaId}}"]
+						}
+					}
+				},
+				{
+					"name": "Buscar por marca",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/vehiculos/marca/Toyota",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8081",
+							"path": ["api", "vehiculos", "marca", "Toyota"]
+						}
+					}
+				},
+				{
+					"name": "Listar vehículos activos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/vehiculos/activos",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8081",
+							"path": ["api", "vehiculos", "activos"]
+						}
+					}
+				},
+				{
+					"name": "Crear Moto",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"placa\": \"ABC123\",\n  \"marca\": \"Yamaha\",\n  \"modelo\": \"YZF-R3\",\n  \"color\": \"Azul\",\n  \"anioFabricacion\": 2023,\n  \"idPropietario\": \"{{personaId}}\",\n  \"tieneCasco\": true,\n  \"cilindraje\": 321,\n  \"tipo\": \"DEPORTIVA\",\n  \"tipoCombustible\": \"GASOLINA\",\n  \"tieneABS\": true,\n  \"numeroRuedas\": 2,\n  \"capacidadTanque\": 14.0,\n  \"tipoFrenos\": \"Disco\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/vehiculos/moto",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8081",
+							"path": ["api", "vehiculos", "moto"]
+						}
+					}
+				},
+				{
+					"name": "Crear Automóvil",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"placa\": \"XYZ789\",\n  \"marca\": \"Toyota\",\n  \"modelo\": \"Corolla\",\n  \"color\": \"Gris\",\n  \"anioFabricacion\": 2024,\n  \"idPropietario\": \"{{personaId}}\",\n  \"tipoAutomovil\": \"SEDAN\",\n  \"tipoCombustible\": \"HIBRIDO\",\n  \"cilindraje\": 1.8,\n  \"suspensionDeportiva\": false,\n  \"traccion\": \"DELANTERA\",\n  \"tieneBalde\": false,\n  \"numeroPuertas\": 4,\n  \"numeroAsientos\": 5,\n  \"capacidadTanque\": 50.0\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/vehiculos/automovil",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8081",
+							"path": ["api", "vehiculos", "automovil"]
+						}
+					}
+				},
+				{
+					"name": "Actualizar Moto",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"placa\": \"ABC123\",\n  \"marca\": \"Yamaha\",\n  \"modelo\": \"YZF-R3\",\n  \"color\": \"Rojo\",\n  \"anioFabricacion\": 2023,\n  \"idPropietario\": \"{{personaId}}\",\n  \"tieneCasco\": true,\n  \"cilindraje\": 321,\n  \"tipo\": \"DEPORTIVA\",\n  \"tipoCombustible\": \"GASOLINA\",\n  \"tieneABS\": true,\n  \"numeroRuedas\": 2,\n  \"capacidadTanque\": 14.0,\n  \"tipoFrenos\": \"Disco\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/vehiculos/moto/{{vehiculoId}}",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8081",
+							"path": ["api", "vehiculos", "moto", "{{vehiculoId}}"]
+						}
+					}
+				},
+				{
+					"name": "Actualizar Automóvil",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"placa\": \"XYZ789\",\n  \"marca\": \"Toyota\",\n  \"modelo\": \"Corolla\",\n  \"color\": \"Negro\",\n  \"anioFabricacion\": 2024,\n  \"idPropietario\": \"{{personaId}}\",\n  \"tipoAutomovil\": \"SEDAN\",\n  \"tipoCombustible\": \"HIBRIDO\",\n  \"cilindraje\": 1.8,\n  \"suspensionDeportiva\": false,\n  \"traccion\": \"DELANTERA\",\n  \"tieneBalde\": false,\n  \"numeroPuertas\": 4,\n  \"numeroAsientos\": 5,\n  \"capacidadTanque\": 50.0\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/vehiculos/automovil/{{vehiculoId}}",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8081",
+							"path": ["api", "vehiculos", "automovil", "{{vehiculoId}}"]
+						}
+					}
+				},
+				{
+					"name": "Eliminar Vehículo",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/vehiculos/{{vehiculoId}}",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8081",
+							"path": ["api", "vehiculos", "{{vehiculoId}}"]
+						}
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "personaId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "vehiculoId",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

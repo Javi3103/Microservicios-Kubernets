@@ -1,0 +1,17 @@
+# Service para ms-clientes
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-clientes-service
+  namespace: microservicios
+  labels:
+    app: ms-clientes
+spec:
+  type: ClusterIP
+  selector:
+    app: ms-clientes
+  ports:
+  - port: 8081
+    targetPort: 8081
+    protocol: TCP
+    name: http

@@ -1,0 +1,45 @@
+services:
+  zone_core:
+    build: .
+    container_name: zone_core
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: db_parkin_zone
+      DB_USER: postgres
+      DB_PASSWORD: kausa
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USER: admin
+      RABBITMQ_PASSWORD: kausa
+      SERVER_PORT: 8080
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+      - rabbitmq
+
+  db:
+    image: postgres:16
+    container_name: zone_core_db
+    environment:
+      POSTGRES_DB: db_parkin_zone
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: kausa
+    ports:
+      - "5432:5432"
+    volumes:
+      - zone_core_db_data:/var/lib/postgresql/data
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: zone_core_rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: kausa
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+volumes:
+  zone_core_db_data:

@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  # Servicio de base de datos PostgreSQL
+  postgres:
+    image: postgres:15-alpine
+    container_name: ms-tickets-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: tickets_db
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - tickets-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Servicio de la aplicación GraphQL
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ms-tickets-app
+    environment:
+      # Configuración de base de datos
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: tickets_db
+      
+      # URLs de otros microservicios (ajusta según tus necesidades)
+      ZONE_SERVICE_URL: ${ZONE_SERVICE_URL:-http://localhost:3001/graphql}
+      PERSONA_SERVICE_URL: ${PERSONA_SERVICE_URL:-http://localhost:3002/graphql}
+      
+      # Configuración de Node
+      NODE_ENV: production
+    ports:
+      - "4000:4000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - tickets-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  tickets-network:
+    driver: bridge

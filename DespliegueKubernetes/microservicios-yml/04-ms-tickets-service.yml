@@ -1,0 +1,17 @@
+# Service para ms-tickets
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-tickets-service
+  namespace: microservicios
+  labels:
+    app: ms-tickets
+spec:
+  type: ClusterIP
+  selector:
+    app: ms-tickets
+  ports:
+  - port: 4000
+    targetPort: 4000
+    protocol: TCP
+    name: http
